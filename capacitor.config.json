@@ -4,7 +4,6 @@
   "webDir": "www",
   "plugins": {
     "FirebaseAuthentication": {
-      "authDomain": "my-attendence-33585.firebaseapp.com",
       "skipNativeAuth": true,
       "providers": [
         "google.com"

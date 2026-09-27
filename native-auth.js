@@ -1,0 +1,1 @@
+export { FirebaseAuthentication } from "@capacitor-firebase/authentication";

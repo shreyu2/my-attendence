@@ -1,4 +1,5 @@
 import { auth, googleProvider } from "./firebase.js";
+import { FirebaseAuthentication } from "./native-auth.js";
 
 import {
     signInWithPopup,
@@ -12,42 +13,26 @@ const googleSignUpBtn = document.getElementById("googleSignUpBtn");
 
 async function googleAuth() {
     try {
-        /*
-         * Android / Capacitor
-         * -------------------
-         * Use native Google Sign-In so Chrome does not open.
-         */
-        if (
-            window.Capacitor &&
-            window.Capacitor.isNativePlatform &&
-            window.Capacitor.isNativePlatform()
-        ) {
-            const FirebaseAuthentication =
-                window.Capacitor.Plugins.FirebaseAuthentication;
+        const isNative =
+            window.location.protocol === "capacitor:" ||
+            window.location.hostname === "localhost";
 
-            if (!FirebaseAuthentication) {
-                throw new Error(
-                    "FirebaseAuthentication Capacitor plugin is not available."
-                );
-            }
+        if (isNative) {
+            console.log("Using native Google Sign-In");
 
             const result =
                 await FirebaseAuthentication.signInWithGoogle({
                     skipNativeAuth: true
                 });
 
+            console.log("Native Google result:", result);
+
             const idToken = result?.credential?.idToken;
 
             if (!idToken) {
-                throw new Error(
-                    "Google sign-in succeeded but no ID token was returned."
-                );
+                throw new Error("No Google ID token was returned.");
             }
 
-            /*
-             * Convert the native Google credential into
-             * a Firebase Web SDK credential.
-             */
             const credential =
                 GoogleAuthProvider.credential(idToken);
 
@@ -57,20 +42,14 @@ async function googleAuth() {
             return;
         }
 
-        /*
-         * Normal website / Cloudflare Pages
-         * ---------------------------------
-         * Keep using the existing Firebase popup login.
-         */
+        console.log("Using web Google Sign-In");
+
         await signInWithPopup(auth, googleProvider);
 
         window.location.href = "index.html";
 
     } catch (error) {
         console.error("Google authentication failed:", error);
-
-        console.error("Error code:", error?.code);
-        console.error("Error message:", error?.message);
 
         alert(
             "Google authentication failed.\n\n" +
@@ -82,11 +61,6 @@ async function googleAuth() {
 googleSignInBtn.addEventListener("click", googleAuth);
 googleSignUpBtn.addEventListener("click", googleAuth);
 
-
-/*
- * If the user is already authenticated,
- * go directly to the dashboard.
- */
 onAuthStateChanged(auth, (user) => {
     if (user) {
         window.location.href = "index.html";
