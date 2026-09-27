@@ -1,12 +1,11 @@
 import { auth, googleProvider } from "./firebase.js";
-import { FirebaseAuthentication } from "./native-auth.js";
 
 import {
     signInWithPopup,
-    signInWithCredential,
-    GoogleAuthProvider,
     onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+import { FirebaseAuthentication } from "./native-auth.js";
 
 const googleSignInBtn = document.getElementById("googleSignInBtn");
 const googleSignUpBtn = document.getElementById("googleSignUpBtn");
@@ -15,45 +14,48 @@ async function googleAuth() {
     try {
         const isNative =
             window.location.protocol === "capacitor:" ||
-            window.location.hostname === "localhost";
+            window.Capacitor?.isNativePlatform?.();
+
+        console.log("Native app:", isNative);
 
         if (isNative) {
-            console.log("Using native Google Sign-In");
+            console.log("Starting native Google Sign-In...");
 
             const result =
-                await FirebaseAuthentication.signInWithGoogle({
-                    skipNativeAuth: true
-                });
+                await FirebaseAuthentication.signInWithGoogle();
 
-            console.log("Native Google result:", result);
+            console.log("Native Google Sign-In result:", result);
 
-            const idToken = result?.credential?.idToken;
-
-            if (!idToken) {
-                throw new Error("No Google ID token was returned.");
-            }
-
-            const credential =
-                GoogleAuthProvider.credential(idToken);
-
-            await signInWithCredential(auth, credential);
-
+            /*
+             * Native plugin has already authenticated
+             * the user with Firebase.
+             */
             window.location.href = "index.html";
+
             return;
         }
 
-        console.log("Using web Google Sign-In");
-
+        /*
+         * Website:
+         * Continue using normal Firebase popup authentication.
+         */
         await signInWithPopup(auth, googleProvider);
 
         window.location.href = "index.html";
 
     } catch (error) {
-        console.error("Google authentication failed:", error);
+        console.error("========== GOOGLE AUTH ERROR ==========");
+        console.error("Code:", error?.code);
+        console.error("Message:", error?.message);
+        console.error("Full error:", error);
+        console.error("======================================");
 
         alert(
             "Google authentication failed.\n\n" +
-            (error?.message || "Please try again.")
+            "Code: " +
+            (error?.code || "unknown") +
+            "\n\n" +
+            (error?.message || "Unknown error")
         );
     }
 }
