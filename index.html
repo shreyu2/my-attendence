@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Attendance Tracker</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>Attendance Tracker</h1>
+            <p>Track your subject-wise attendance.</p>
+        </header>
+
+        <div class="top-bar">
+            <div>
+                <label for="threshold">Attendance Threshold</label>
+
+                <div class="threshold-input">
+                    <input
+                        type="number"
+                        id="threshold"
+                        value="85"
+                        min="1"
+                        max="100"
+                    >
+
+                    <span>%</span>
+                </div>
+            </div>
+
+            <button id="addSubjectBtn" class="primary-btn">
+                + Add Subject
+            </button>
+        </div>
+
+        <div id="subjectsContainer"></div>
+
+        <div id="emptyState" class="empty-state">
+            <h2>No subjects added</h2>
+            <p>Add a subject to start tracking your attendance.</p>
+        </div>
+
+    </div>
+
+    <!-- Add Subject Modal -->
+
+    <div id="modal" class="modal hidden">
+
+        <div class="modal-content">
+
+            <h2>Add Subject</h2>
+
+            <label for="subjectName">
+                Subject Name
+            </label>
+
+            <input
+                type="text"
+                id="subjectName"
+                placeholder="e.g. Data Structures"
+            >
+
+            <label for="attended">
+                Classes Attended
+            </label>
+
+            <input
+                type="number"
+                id="attended"
+                min="0"
+                placeholder="e.g. 25"
+            >
+
+            <label for="conducted">
+                Classes Conducted
+            </label>
+
+            <input
+                type="number"
+                id="conducted"
+                min="0"
+                placeholder="e.g. 30"
+            >
+
+            <div id="modalError" class="error"></div>
+
+            <div class="modal-buttons">
+
+                <button
+                    id="cancelBtn"
+                    class="secondary-btn"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    id="saveSubjectBtn"
+                    class="primary-btn"
+                >
+                    Add Subject
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
