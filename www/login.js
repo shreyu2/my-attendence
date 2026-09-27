@@ -15,48 +15,40 @@ async function googleAuth() {
     }
 
     googleSignUpBtn.disabled = true;
-    googleSignUpBtn.textContent = "Authenticating...";
+    googleSignUpBtn.innerHTML = "Authenticating...";
 
     try {
         const isNative =
             window.location.protocol === "capacitor:" ||
             window.Capacitor?.isNativePlatform?.();
 
-        /*
-         * ANDROID / CAPACITOR
-         */
+        console.log("Is native:", isNative);
+
         if (isNative) {
+            console.log("Starting native Google Sign-In...");
 
-            console.log("Starting native Google authentication...");
+            const result =
+                await FirebaseAuthentication.signInWithGoogle();
 
-            await FirebaseAuthentication.signInWithGoogle();
+            console.log("Google authentication result:", result);
 
-            console.log("Google authentication successful.");
-
-            // Directly go to dashboard.
             window.location.replace("index.html");
 
             return;
         }
 
-        /*
-         * WEBSITE / CLOUDFLARE
-         */
-        console.log("Starting web Google authentication...");
+        console.log("Starting web Google Sign-In...");
 
         await signInWithPopup(auth, googleProvider);
 
-        console.log("Google authentication successful.");
+        console.log("Web Google authentication successful.");
 
-        // Directly go to dashboard.
         window.location.replace("index.html");
 
     } catch (error) {
-
-        console.error("Google authentication failed.");
+        console.error("Google authentication failed:", error);
         console.error("Error code:", error?.code);
         console.error("Error message:", error?.message);
-        console.error("Full error:", error);
 
         alert(
             "Google authentication failed.\n\n" +
@@ -64,9 +56,14 @@ async function googleAuth() {
         );
 
         googleSignUpBtn.disabled = false;
+
         googleSignUpBtn.innerHTML = `
             <span class="google-icon">G</span>
             Continue with Google
         `;
     }
 }
+
+
+/* THIS WAS MISSING */
+googleSignUpBtn.addEventListener("click", googleAuth);
