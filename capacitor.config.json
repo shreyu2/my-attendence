@@ -1,13 +1,13 @@
 {
-  "appId": "com.shreyas.attendancetracker",
-  "appName": "Attendance Tracker",
-  "webDir": "www",
-  "plugins": {
-    "FirebaseAuthentication": {
-      "skipNativeAuth": false,
-      "providers": [
-        "google.com"
-      ]
+    "appId": "com.shreyas.attendancetracker",
+    "appName": "Attendance Tracker",
+    "webDir": "www",
+    "plugins": {
+        "FirebaseAuthentication": {
+            "skipNativeAuth": false,
+            "providers": [
+                "google.com"
+            ]
+        }
     }
-  }
 }

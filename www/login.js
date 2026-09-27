@@ -1,70 +1,72 @@
 import { auth, googleProvider } from "./firebase.js";
 
 import {
-    signInWithPopup,
-    onAuthStateChanged
+    signInWithPopup
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
 import { FirebaseAuthentication } from "./native-auth.js";
 
-const googleSignInBtn = document.getElementById("googleSignInBtn");
 const googleSignUpBtn = document.getElementById("googleSignUpBtn");
 
 async function googleAuth() {
+    if (!googleSignUpBtn) {
+        console.error("Google button not found.");
+        return;
+    }
+
+    googleSignUpBtn.disabled = true;
+    googleSignUpBtn.textContent = "Authenticating...";
+
     try {
         const isNative =
             window.location.protocol === "capacitor:" ||
             window.Capacitor?.isNativePlatform?.();
 
-        console.log("Native app:", isNative);
-
+        /*
+         * ANDROID / CAPACITOR
+         */
         if (isNative) {
-            console.log("Starting native Google Sign-In...");
 
-            const result =
-                await FirebaseAuthentication.signInWithGoogle();
+            console.log("Starting native Google authentication...");
 
-            console.log("Native Google Sign-In result:", result);
+            await FirebaseAuthentication.signInWithGoogle();
 
-            /*
-             * Native plugin has already authenticated
-             * the user with Firebase.
-             */
-            window.location.href = "index.html";
+            console.log("Google authentication successful.");
+
+            // Directly go to dashboard.
+            window.location.replace("index.html");
 
             return;
         }
 
         /*
-         * Website:
-         * Continue using normal Firebase popup authentication.
+         * WEBSITE / CLOUDFLARE
          */
+        console.log("Starting web Google authentication...");
+
         await signInWithPopup(auth, googleProvider);
 
-        window.location.href = "index.html";
+        console.log("Google authentication successful.");
+
+        // Directly go to dashboard.
+        window.location.replace("index.html");
 
     } catch (error) {
-        console.error("========== GOOGLE AUTH ERROR ==========");
-        console.error("Code:", error?.code);
-        console.error("Message:", error?.message);
+
+        console.error("Google authentication failed.");
+        console.error("Error code:", error?.code);
+        console.error("Error message:", error?.message);
         console.error("Full error:", error);
-        console.error("======================================");
 
         alert(
             "Google authentication failed.\n\n" +
-            "Code: " +
-            (error?.code || "unknown") +
-            "\n\n" +
-            (error?.message || "Unknown error")
+            (error?.message || "Please try again.")
         );
+
+        googleSignUpBtn.disabled = false;
+        googleSignUpBtn.innerHTML = `
+            <span class="google-icon">G</span>
+            Continue with Google
+        `;
     }
 }
-
-googleSignInBtn.addEventListener("click", googleAuth);
-googleSignUpBtn.addEventListener("click", googleAuth);
-
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        window.location.href = "index.html";
-    }
-});
