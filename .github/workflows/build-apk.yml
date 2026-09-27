@@ -23,6 +23,14 @@ jobs:
           distribution: temurin
           java-version: '21'
 
+      - name: Show debug keystore SHA-1
+        run: |
+          keytool -list -v \
+            -keystore ~/.android/debug.keystore \
+            -alias androiddebugkey \
+            -storepass android \
+            -keypass android | grep SHA1
+
       - name: Verify Java
         run: java -version
 
