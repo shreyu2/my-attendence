@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "171435955609-59ivfnaug3vnucancl0r4tavtjnrl9hc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shreyas.attendancetracker",
+            "certificate_hash": "132bd2a473244928f0c3f0e662d998a490c01845"
+          }
+        },
+        {
           "client_id": "171435955609-d2tp74al7rtkiur7eicl0ui14nicaccg.apps.googleusercontent.com",
           "client_type": 3
         }
