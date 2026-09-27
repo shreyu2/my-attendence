@@ -6,8 +6,6 @@ import {
     signInWithCredential
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
-import { FirebaseAuthentication } from "./native-auth.js";
-
 const googleSignUpBtn =
     document.getElementById("googleSignUpBtn");
 
@@ -29,7 +27,7 @@ async function googleAuth() {
     try {
 
         /*
-         * Detect Capacitor Android
+         * Detect Android / Capacitor
          */
         const isNative =
             window.Capacitor &&
@@ -37,15 +35,31 @@ async function googleAuth() {
             window.Capacitor.isNativePlatform();
 
 
-        /* =====================================
+        /* =========================================
            ANDROID APK
-        ===================================== */
+        ========================================= */
 
         if (isNative) {
 
             console.log(
-                "Using native Google authentication"
+                "Android app detected."
             );
+
+            /*
+             * Load the native Firebase plugin
+             * ONLY inside the Android app.
+             *
+             * The website will never execute this.
+             */
+            const {
+                FirebaseAuthentication
+            } = await import("./native-auth.js");
+
+
+            console.log(
+                "Firebase native plugin loaded."
+            );
+
 
             const result =
                 await FirebaseAuthentication.signInWithGoogle();
@@ -70,6 +84,11 @@ async function googleAuth() {
             }
 
 
+            /*
+             * Convert native Google token
+             * into Firebase Web SDK credential.
+             */
+
             const credential =
                 GoogleAuthProvider.credential(
                     idToken
@@ -83,7 +102,7 @@ async function googleAuth() {
 
 
             console.log(
-                "Firebase authentication successful"
+                "Firebase authentication successful."
             );
 
 
@@ -96,14 +115,20 @@ async function googleAuth() {
         }
 
 
-        /* =====================================
+        /* =========================================
            WEBSITE
-        ===================================== */
+        ========================================= */
 
         console.log(
-            "Using Firebase Web Google authentication"
+            "Website detected."
         );
 
+
+        /*
+         * Normal Firebase Web authentication.
+         *
+         * No Capacitor plugin is loaded here.
+         */
 
         await signInWithPopup(
             auth,
@@ -112,14 +137,13 @@ async function googleAuth() {
 
 
         console.log(
-            "Website Google authentication successful"
+            "Website Google authentication successful."
         );
 
 
         window.location.replace(
             "./index.html"
         );
-
 
     } catch (error) {
 
@@ -141,7 +165,6 @@ async function googleAuth() {
 
         googleSignUpBtn.disabled = false;
 
-
         googleSignUpBtn.innerHTML = `
             <span class="google-icon">G</span>
             Continue with Google
@@ -157,12 +180,14 @@ async function googleAuth() {
         );
 
     }
+
 }
 
 
-/*
- * Google button
- */
+/* =========================================
+   GOOGLE BUTTON
+========================================= */
+
 googleSignUpBtn.addEventListener(
     "click",
     googleAuth
