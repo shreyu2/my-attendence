@@ -20,8 +20,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Copy web assets
-        run: npx cap copy android
+      - name: Sync Capacitor Android project
+        run: npx cap sync android
 
       - name: Make Gradle executable
         run: chmod +x android/gradlew
