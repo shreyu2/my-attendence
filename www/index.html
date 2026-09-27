@@ -17,11 +17,48 @@
         <!-- GOOGLE LOGIN -->
         <div class="auth-bar">
     <div id="userInfo" class="user-info">
-        <span id="userName"></span>
+
+        <div class="profile-name">
+            <span id="userName"></span>
+
+            <button id="editNameBtn" class="edit-name-btn" title="Edit name">
+                ✎
+            </button>
+        </div>
+
         <button id="logoutBtn" class="secondary-btn">
             Sign Out
         </button>
+
     </div>
+</div>
+
+<!-- Edit Name Modal -->
+<div id="nameModal" class="name-modal hidden">
+
+    <div class="name-modal-card">
+
+        <h2>Edit Name</h2>
+
+        <input
+            type="text"
+            id="nameInput"
+            placeholder="Enter your name"
+            maxlength="30"
+        >
+
+        <div class="name-modal-actions">
+            <button id="cancelNameBtn" class="secondary-btn">
+                Cancel
+            </button>
+
+            <button id="saveNameBtn" class="primary-btn">
+                Save
+            </button>
+        </div>
+
+    </div>
+
 </div>
 
 

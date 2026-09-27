@@ -1,33 +1,16 @@
 import {
-    auth,
-    googleProvider
+    auth
 } from "./firebase.js";
 
 import {
-    signInWithPopup,
     signOut,
     onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
-onAuthStateChanged(auth, (user) => {
-
-    if (!user) {
-        window.location.href = "login.html";
-        return;
-    }
-
-    userName.textContent =
-        user.displayName || user.email;
-
-});
-
 
 /* =========================
-   GOOGLE AUTH ELEMENTS
+   AUTH ELEMENTS
 ========================= */
-
-const googleLoginBtn =
-    document.getElementById("googleLoginBtn");
 
 const logoutBtn =
     document.getElementById("logoutBtn");
@@ -40,32 +23,66 @@ const userName =
 
 
 /* =========================
-   GOOGLE LOGIN
+   EDIT NAME ELEMENTS
 ========================= */
 
-googleLoginBtn.addEventListener(
-    "click",
-    async () => {
+const editNameBtn =
+    document.getElementById("editNameBtn");
 
-        try {
+const nameModal =
+    document.getElementById("nameModal");
 
-            await signInWithPopup(
-                auth,
-                googleProvider
-            );
+const nameInput =
+    document.getElementById("nameInput");
 
-        } catch (error) {
+const cancelNameBtn =
+    document.getElementById("cancelNameBtn");
 
-            console.error(
-                "Google login failed:",
-                error
-            );
+const saveNameBtn =
+    document.getElementById("saveNameBtn");
 
-            alert(
-                "Google login failed. Please try again."
-            );
+
+/* =========================
+   AUTH STATE
+========================= */
+
+onAuthStateChanged(
+    auth,
+    (user) => {
+
+        if (!user) {
+
+            window.location.href =
+                "login.html";
+
+            return;
 
         }
+
+
+        userInfo.classList.remove(
+            "hidden"
+        );
+
+
+        /*
+         * Use the custom name if the user
+         * has already created one.
+         *
+         * Otherwise use the Google
+         * display name.
+         */
+
+        const savedName =
+            localStorage.getItem(
+                "attendanceDisplayName"
+            );
+
+
+        userName.textContent =
+            savedName ||
+            user.displayName ||
+            "User";
 
     }
 );
@@ -83,11 +100,18 @@ logoutBtn.addEventListener(
 
             await signOut(auth);
 
+            window.location.href =
+                "login.html";
+
         } catch (error) {
 
             console.error(
                 "Logout failed:",
                 error
+            );
+
+            alert(
+                "Logout failed. Please try again."
             );
 
         }
@@ -97,36 +121,149 @@ logoutBtn.addEventListener(
 
 
 /* =========================
-   AUTH STATE
+   EDIT NAME
 ========================= */
 
-onAuthStateChanged(
-    auth,
-    (user) => {
+editNameBtn.addEventListener(
+    "click",
+    () => {
 
-        if (user) {
+        /*
+         * Put the current name inside
+         * the input field.
+         */
 
-            googleLoginBtn.style.display =
-                "none";
+        nameInput.value =
+            userName.textContent;
 
-            userInfo.classList.remove(
+
+        nameModal.classList.remove(
+            "hidden"
+        );
+
+
+        nameInput.focus();
+
+    }
+);
+
+
+/* =========================
+   CANCEL NAME EDIT
+========================= */
+
+cancelNameBtn.addEventListener(
+    "click",
+    () => {
+
+        nameModal.classList.add(
+            "hidden"
+        );
+
+    }
+);
+
+
+/* =========================
+   SAVE NAME
+========================= */
+
+saveNameBtn.addEventListener(
+    "click",
+    () => {
+
+        const newName =
+            nameInput.value.trim();
+
+
+        if (!newName) {
+
+            alert(
+                "Please enter a name."
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * Save the custom name locally.
+         */
+
+        localStorage.setItem(
+            "attendanceDisplayName",
+            newName
+        );
+
+
+        /*
+         * Update the dashboard
+         * immediately.
+         */
+
+        userName.textContent =
+            newName;
+
+
+        /*
+         * Close modal.
+         */
+
+        nameModal.classList.add(
+            "hidden"
+        );
+
+    }
+);
+
+
+/* =========================
+   CLOSE NAME MODAL
+   WHEN CLICKING OUTSIDE
+========================= */
+
+nameModal.addEventListener(
+    "click",
+    (event) => {
+
+        if (
+            event.target ===
+            nameModal
+        ) {
+
+            nameModal.classList.add(
                 "hidden"
             );
 
-            userName.textContent =
-                user.displayName ||
-                user.email;
+        }
 
-        } else {
+    }
+);
 
-            googleLoginBtn.style.display =
-                "block";
 
-            userInfo.classList.add(
-                "hidden"
-            );
+/* =========================
+   ENTER KEY TO SAVE NAME
+========================= */
 
-            userName.textContent = "";
+nameInput.addEventListener(
+    "keydown",
+    (event) => {
+
+        if (
+            event.key === "Enter"
+        ) {
+
+            saveNameBtn.click();
+
+        }
+
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            cancelNameBtn.click();
 
         }
 
@@ -1064,7 +1201,7 @@ function escapeHTML(text) {
 
 
 /* =========================
-   MAKE INLINE BUTTONS WORK
+   INLINE BUTTON FUNCTIONS
 ========================= */
 
 window.markPresent =
