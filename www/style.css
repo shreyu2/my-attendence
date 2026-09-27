@@ -2,19 +2,80 @@
     box-sizing: border-box;
 }
 
+
 body {
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
     background: #f5f5f5;
+
     color: #222;
 }
 
+
 .container {
     width: 100%;
+
     max-width: 1100px;
+
     margin: 0 auto;
+
     padding: 40px 20px;
 }
+
+
+/* =========================
+   GOOGLE LOGIN
+========================= */
+
+.auth-bar {
+    display: flex;
+
+    justify-content: flex-end;
+
+    margin-bottom: 20px;
+}
+
+
+.user-info {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+.user-info.hidden {
+    display: none;
+}
+
+
+.google-btn {
+    background: #4285f4;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 6px;
+
+    padding: 10px 16px;
+
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+
+.google-btn:hover {
+    background: #3367d6;
+}
+
 
 /* =========================
    HEADER
@@ -24,15 +85,20 @@ header {
     margin-bottom: 30px;
 }
 
+
 header h1 {
     margin: 0 0 8px;
+
     font-size: 32px;
 }
 
+
 header p {
     margin: 0;
+
     color: #666;
 }
+
 
 /* =========================
    TOP BAR
@@ -40,35 +106,49 @@ header p {
 
 .top-bar {
     display: flex;
+
     align-items: end;
+
     justify-content: space-between;
+
     gap: 20px;
 
     background: white;
+
     border: 1px solid #ddd;
+
     border-radius: 10px;
 
     padding: 20px;
+
     margin-bottom: 25px;
 }
 
+
 .top-bar label {
     display: block;
+
     margin-bottom: 7px;
 
     font-size: 14px;
+
     font-weight: 600;
 }
 
+
 .threshold-input {
     display: flex;
+
     align-items: center;
+
     gap: 8px;
 }
+
 
 .threshold-input input {
     width: 80px;
 }
+
 
 /* =========================
    INPUTS
@@ -80,6 +160,7 @@ input {
     padding: 10px 12px;
 
     border: 1px solid #ccc;
+
     border-radius: 6px;
 
     font-size: 15px;
@@ -87,9 +168,11 @@ input {
     outline: none;
 }
 
+
 input:focus {
     border-color: #333;
 }
+
 
 /* =========================
    BUTTONS
@@ -97,6 +180,7 @@ input:focus {
 
 button {
     border: none;
+
     border-radius: 6px;
 
     padding: 9px 12px;
@@ -106,53 +190,70 @@ button {
     cursor: pointer;
 }
 
+
 .primary-btn {
     background: #222;
+
     color: white;
 }
+
 
 .primary-btn:hover {
     background: #000;
 }
 
+
 .secondary-btn {
     background: #eee;
+
     color: #222;
 }
+
 
 .secondary-btn:hover {
     background: #ddd;
 }
 
+
 .present-btn {
     background: #198754;
+
     color: white;
 }
+
 
 .present-btn:hover {
     background: #146c43;
 }
 
+
 .absent-btn {
     background: #dc3545;
+
     color: white;
 }
+
 
 .absent-btn:hover {
     background: #bb2d3b;
 }
 
+
 .delete-btn {
     background: transparent;
+
     color: #dc3545;
 
     border: 1px solid #dc3545;
 }
 
+
 .delete-btn:hover {
     background: #dc3545;
+
     color: white;
 }
+
 
 /* =========================
    SUBJECT GRID
@@ -161,10 +262,12 @@ button {
 #subjectsContainer {
     display: grid;
 
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
 
     gap: 15px;
 }
+
 
 /* =========================
    SUBJECT CARD
@@ -174,6 +277,7 @@ button {
     background: white;
 
     border: 1px solid #ddd;
+
     border-radius: 10px;
 
     padding: 18px;
@@ -182,6 +286,7 @@ button {
 
     min-width: 0;
 }
+
 
 /* =========================
    SUBJECT HEADER
@@ -193,20 +298,26 @@ button {
     margin-bottom: 14px;
 }
 
+
 .subject-header h2 {
     margin: 0 0 8px;
 
     font-size: 19px;
 
     white-space: nowrap;
+
     overflow: hidden;
+
     text-overflow: ellipsis;
 }
 
+
 .attendance-percentage {
     font-size: 28px;
+
     font-weight: bold;
 }
+
 
 /* =========================
    ATTENDANCE DETAILS
@@ -219,6 +330,7 @@ button {
 
     margin-bottom: 12px;
 }
+
 
 /* =========================
    PROGRESS BAR
@@ -238,6 +350,7 @@ button {
     margin-bottom: 15px;
 }
 
+
 .progress-bar {
     height: 100%;
 
@@ -246,13 +359,16 @@ button {
     transition: width 0.2s;
 }
 
+
 .progress-bar.warning {
     background: #f0ad4e;
 }
 
+
 .progress-bar.danger {
     background: #dc3545;
 }
+
 
 /* =========================
    INFORMATION BOXES
@@ -268,6 +384,7 @@ button {
     margin-bottom: 15px;
 }
 
+
 .info-box {
     background: #f7f7f7;
 
@@ -275,6 +392,7 @@ button {
 
     padding: 9px;
 }
+
 
 .info-label {
     font-size: 11px;
@@ -284,11 +402,13 @@ button {
     margin-bottom: 3px;
 }
 
+
 .info-value {
     font-size: 14px;
 
     font-weight: bold;
 }
+
 
 /* =========================
    SUBJECT ACTIONS
@@ -302,16 +422,17 @@ button {
     gap: 7px;
 }
 
+
 .subject-actions button {
     width: 100%;
 }
 
-/* Make Edit and Delete span the full card width */
 
 .subject-actions .secondary-btn,
 .subject-actions .delete-btn {
     grid-column: span 2;
 }
+
 
 /* =========================
    EMPTY STATE
@@ -329,15 +450,18 @@ button {
     padding: 50px 20px;
 }
 
+
 .empty-state h2 {
     margin-bottom: 8px;
 }
+
 
 .empty-state p {
     margin: 0;
 
     color: #777;
 }
+
 
 /* =========================
    MODAL
@@ -353,6 +477,7 @@ button {
     display: flex;
 
     justify-content: center;
+
     align-items: center;
 
     padding: 20px;
@@ -360,9 +485,11 @@ button {
     z-index: 1000;
 }
 
+
 .modal.hidden {
     display: none;
 }
+
 
 .modal-content {
     width: 100%;
@@ -376,21 +503,26 @@ button {
     padding: 25px;
 }
 
+
 .modal-content h2 {
     margin-top: 0;
 
     margin-bottom: 20px;
 }
 
+
 .modal-content label {
     display: block;
 
     margin-top: 15px;
+
     margin-bottom: 6px;
 
     font-size: 14px;
+
     font-weight: 600;
 }
+
 
 .modal-buttons {
     display: flex;
@@ -402,6 +534,7 @@ button {
     margin-top: 25px;
 }
 
+
 .error {
     color: #dc3545;
 
@@ -409,6 +542,7 @@ button {
 
     margin-top: 12px;
 }
+
 
 /* =========================
    TABLET
@@ -420,10 +554,14 @@ button {
         padding: 30px 15px;
     }
 
+
     #subjectsContainer {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
     }
+
 }
+
 
 /* =========================
    MOBILE
@@ -435,9 +573,28 @@ button {
         padding: 25px 12px;
     }
 
+
     header h1 {
         font-size: 26px;
     }
+
+
+    .auth-bar {
+        justify-content: stretch;
+    }
+
+
+    .google-btn {
+        width: 100%;
+    }
+
+
+    .user-info {
+        width: 100%;
+
+        justify-content: space-between;
+    }
+
 
     .top-bar {
         align-items: stretch;
@@ -445,28 +602,35 @@ button {
         flex-direction: column;
     }
 
+
     #subjectsContainer {
         grid-template-columns: 1fr;
     }
+
 
     .subject-card {
         padding: 18px;
     }
 
+
     .subject-header {
         display: flex;
 
         align-items: center;
+
         justify-content: space-between;
 
         gap: 10px;
     }
 
+
     .subject-header h2 {
         margin: 0;
     }
 
+
     .attendance-percentage {
         font-size: 24px;
     }
+
 }
