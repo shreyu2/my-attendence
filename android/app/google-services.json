@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "171435955609",
+    "project_id": "my-attendence-33585",
+    "storage_bucket": "my-attendence-33585.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:171435955609:android:5aebc496560b1c5bf36f08",
+        "android_client_info": {
+          "package_name": "com.shreyas.attendancetracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "171435955609-d2tp74al7rtkiur7eicl0ui14nicaccg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYwRbVTKw4d-1guMc7uYASfBX1xNLxWGA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "171435955609-d2tp74al7rtkiur7eicl0ui14nicaccg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

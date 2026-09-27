@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/shreyu2/my-attendence#readme",
   "dependencies": {
+    "@capacitor-firebase/authentication": "^8.5.2",
     "@capacitor/android": "^8.5.2",
     "@capacitor/cli": "^8.5.2",
     "@capacitor/core": "^8.5.2",

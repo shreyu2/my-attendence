@@ -1,5 +1,14 @@
 {
   "appId": "com.shreyas.attendancetracker",
   "appName": "Attendance Tracker",
-  "webDir": "www"
+  "webDir": "www",
+  "plugins": {
+    "FirebaseAuthentication": {
+      "authDomain": "my-attendence-33585.firebaseapp.com",
+      "skipNativeAuth": true,
+      "providers": [
+        "google.com"
+      ]
+    }
+  }
 }
