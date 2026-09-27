@@ -9,6 +9,18 @@ import {
     onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
+onAuthStateChanged(auth, (user) => {
+
+    if (!user) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    userName.textContent =
+        user.displayName || user.email;
+
+});
+
 
 /* =========================
    GOOGLE AUTH ELEMENTS
